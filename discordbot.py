@@ -39,7 +39,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    if message.content.find('@MS-DOS-LY') != -1:
+    if message.content.find('@MS-DOS-LY#1956') != -1:
 
         response = await send_request(message.content)
         
