@@ -41,24 +41,12 @@ async def on_message(message):
 
     if message.reference and message.reference.resolved.author == bot.user:
     
-        if message.reference isinstance(message.reference.resolved, discord.User) and message.reference.resolved.id != client.user.id:
-
-            response = await send_request(message.content)
-            
-            if response.status_code == 200:
-                await message.channel.send(response.json()['output'].strip())
-            else:
-                await message.channel.send(f'Sorry {message.author.mention}, something went wrong.') 
-  
+        response = await send_request(message.content)
+        
+        if response.status_code == 200:
+            await message.channel.send(response.json()['output'].strip())
         else:
-             response = await send_request(message.content)
-            
-            if response.status_code == 200:
-                await message.channel.send(f'Hi {message.author.mention} \n'+ response.json()['output'].strip())
-            else:
-                await message.channel.send(f'Sorry {message.author.mention}, something went wrong.')    
-               
-
+            await message.channel.send(f'Sorry {message.author.mention}, something went wrong.') 
 
 TOKEN = os.getenv("BOT_API_TOKEN")
 
