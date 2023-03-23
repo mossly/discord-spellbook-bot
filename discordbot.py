@@ -22,7 +22,7 @@ async def on_message(message):
 
     data = {
       "input": {
-        "input": str(message.content.lower)
+        "input": str(message.content).lower()
       }
     }
     
@@ -34,11 +34,7 @@ async def on_message(message):
       headers=headers
     )
     
-    print(response.json()) 
-    
     await message.channel.send(str(response.json()))
-
-    await bot.process_commands(message)
 
 TOKEN = os.getenv("BOT_API_TOKEN")
 
