@@ -34,7 +34,9 @@ async def on_message(message):
       headers=headers
     )
     
-    await message.channel.send(str(response.json()))
+    response_dict = response.json()
+    output_message = response_dict['output'].strip()
+    await message.channel.send(output_message)
 
 TOKEN = os.getenv("BOT_API_TOKEN")
 
