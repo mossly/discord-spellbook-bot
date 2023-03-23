@@ -20,28 +20,23 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    print("message received")
-
     data = {
-        "input": {
-        "name": "John",
-        "message": "Hello"
-        }
+      "input": {
+        "input": str(message)
+      }
     }
-    
-    print("data created")
     
     headers = {"Authorization":"Basic clfkgvelr03h4xf1ac0zl2cd5"}
     
-    response = requests.post("https://dashboard.scale.com/spellbook/api/v2/deploy/yc63dn6", json=data, headers=headers)
+    response = requests.post(
+      "https://dashboard.scale.com/spellbook/api/v2/deploy/yc63dn6",
+      json=data,
+      headers=headers
+    )
     
-    print("request posted")
-    
-    print(response.json())
+    print(response.json()) 
     
     await message.channel.send(str(response.json()))
-    
-    print("message sent")
 
     await bot.process_commands(message)
 
