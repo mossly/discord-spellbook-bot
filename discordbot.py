@@ -15,7 +15,7 @@ async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
 # Event for sending Scale.AI Spellbook API requests
-async def send_request(message_content):
+def send_request(message_content):
     data = {
         "input": {
             "input": str(message_content).lower()
