@@ -34,9 +34,10 @@ async def on_message(message):
       headers=headers
     )
     
-    response_dict = response.json()
-    output_message = response_dict['output'].strip()
-    await message.channel.send(output_message)
+    await message.channel.send(response.json()['output'].strip())
+
+    if bot.user in message.mentions:
+        await message.channel.send(f'Hi {message.author.mention} \n'+ response.json()['output'].strip())
 
 TOKEN = os.getenv("BOT_API_TOKEN")
 
