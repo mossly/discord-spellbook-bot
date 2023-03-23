@@ -24,7 +24,7 @@ async def on_message(message):
 
     data = {
         "input": {
-        "name": message.author,
+        "name": message.author.display_name,
         "message": message.content.lower
         }
     }
