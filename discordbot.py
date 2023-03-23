@@ -25,4 +25,4 @@ async def on_message(message):
     await bot.process_commands(message)
 
 # Run the bot
-bot.run(BOT_API_TOKEN)
+bot.run(os.getenv(BOT_API_TOKEN))
