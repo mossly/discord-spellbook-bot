@@ -40,11 +40,21 @@ async def on_message(message):
 
     if bot.user in message.mentions:
 
-        await message.channel.send(f'Hi {message.author.mention} \n'+ send_request(message.content).json()['output'].strip())
+        response = await send_request(message.content)
+        
+        if response.status_code == 200:
+            await message.channel.send(f'Hi {message.author.mention} \n'+ response.json()['output'].strip())
+        else:
+            await message.channel.send(f'Sorry {message.author.mention}, something went wrong.') 
         
     if message.reference and message.reference.resolved.author == bot.user:
     
-        await message.channel.send(send_request(message.content).json()['output'].strip())
+        response = await send_request(message.content)
+        
+        if response.status_code == 200:
+            await message.channel.send(response.json()['output'].strip())
+        else:
+            await message.channel.send(f'Sorry {message.author.mention}, something went wrong.') 
 
 TOKEN = os.getenv("BOT_API_TOKEN")
 
