@@ -1,3 +1,4 @@
+import requests
 import os
 import discord
 from discord.ext import commands
@@ -19,9 +20,18 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    if message.content.lower() == "hello":
-        response = "Hello!"
-        await message.channel.send(response)
+    data = {
+        "input": {
+        "name": message.author,
+        "message": message.content.lower
+        }
+    }
+    
+    headers = {"Authorization":"Basic clfi7racs05ieww1a8dmagii6"}
+    
+    response = requests.post("https://dashboard.scale.com/spellbook/api/v2/deploy/cv63bxe", json=data, headers=headers)
+        
+    await message.channel.send(response)
 
     await bot.process_commands(message)
 
