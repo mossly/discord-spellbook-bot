@@ -45,7 +45,7 @@ async def on_message(message):
         reply_to = None
         if message.reference and message.reference.cached_message.author == bot.user:
             # User is replying to a bot message
-            reply_to = message.reference.cached_message.id
+            reply_to = message.reference.cached_message.content
         
         response = await send_request(message.content, reply_to=reply_to)
         
