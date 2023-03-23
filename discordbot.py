@@ -39,7 +39,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    if message.reference and message.reference.resolved.author == bot.user:
+    if bot.user in message.mentions:
     
         response = await send_request(message.content)
         
