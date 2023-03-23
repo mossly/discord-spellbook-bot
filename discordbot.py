@@ -41,7 +41,7 @@ async def on_message(message):
 
     if message.reference and message.reference.resolved.author == bot.user:
     
-        if message.reference and message.reference.cached_message is not None:
+        if message.reference.cached_message is None:
         
             response = await send_request(message.content)
             
