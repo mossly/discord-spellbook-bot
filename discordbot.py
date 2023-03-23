@@ -35,17 +35,18 @@ def send_request(message_content):
 # Event for handling messages
 @bot.event
 async def on_message(message):
+    # Check if the message was sent by the bot itself
     if message.author == bot.user:
         return
 
-    if bot.user in message.mentions:
+    if '@MS-DOS-LY' in message.content:
 
         response = await send_request(message.content)
         
         if response.status_code == 200:
             await message.channel.send(f'Hi {message.author.mention} \n'+ response.json()['output'].strip())
         else:
-            await message.channel.send(f'Sorry {message.author.mention}, something went wrong.') 
+            await message.channel.send(f'Sorry {message.author.mention}, something went wrong.')    
         
     if message.reference and message.reference.resolved.author == bot.user:
     
