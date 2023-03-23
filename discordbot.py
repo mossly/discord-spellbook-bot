@@ -15,10 +15,11 @@ async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
 # Event for sending Scale.AI Spellbook API requests
-async def send_request(message_content):
+async def send_request(message_content, reply_to):
     data = {
         "input": {
-            "input": str(message_content).lower()
+            "previous_response": str(reply_to),
+            "user_message": str(message_content).lower()
         }
     }
 
@@ -41,7 +42,12 @@ async def on_message(message):
 
     if bot.user in message.mentions:
     
-        response = await send_request(message.content)
+        reply_to = None
+        if message.reference and message.reference.cached_message.author == bot.user:
+            # User is replying to a bot message
+            reply_to = message.reference.cached_message.id
+        
+        response = await send_request(message.content, reply_to=reply_to)
         
         if response.status_code == 200:
             await message.channel.send(response.json()['output'].strip())
