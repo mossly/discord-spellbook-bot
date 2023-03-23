@@ -1,3 +1,4 @@
+import os
 import discord
 from discord.ext import commands
 
@@ -24,5 +25,7 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
+TOKEN = os.getenv("BOT_API_TOKEN")
+
 # Run the bot
-bot.run(os.getenv(BOT_API_TOKEN))
+bot.run(TOKEN)
