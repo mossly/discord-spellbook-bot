@@ -31,9 +31,9 @@ async def on_message(message):
     
     print("data created")
     
-    headers = {"Authorization":"Basic clfi7racs05ieww1a8dmagii6"}
+    headers = {"Authorization":"Basic clfkgvelr03h4xf1ac0zl2cd5"}
     
-    response = requests.post("https://dashboard.scale.com/spellbook/api/v2/deploy/cv63bxe", json=data, headers=headers)
+    response = requests.post("https://dashboard.scale.com/spellbook/api/v2/deploy/yc63dn6", json=data, headers=headers)
     
     print("request posted")
     
