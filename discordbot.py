@@ -22,7 +22,7 @@ async def on_message(message):
 
     data = {
       "input": {
-        "input": str(message)
+        "input": str(message.content.lower)
       }
     }
     
