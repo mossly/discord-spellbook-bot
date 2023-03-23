@@ -7,10 +7,6 @@ intents.typing = False
 intents.presences = False
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# Load your bot token from a file or an environment variable
-with open("bot_token.txt", "r") as file:
-    TOKEN = file.read().strip()
-
 # Event for when the bot is ready
 @bot.event
 async def on_ready():
