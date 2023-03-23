@@ -37,7 +37,9 @@ async def on_message(message):
     
     print("request posted")
     
-    await message.channel.send(str(response))
+    print(response.json())
+    
+    await message.channel.send(str(response.json()))
     
     print("message sent")
 
