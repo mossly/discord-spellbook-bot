@@ -53,9 +53,9 @@ async def on_message(message):
         response = await send_request(message.content, reply_to=reply_to)
         
         if response.status_code == 200:
-            await message.channel.send(response.json()['output'].strip())
+            await message.reference.cached_message.send(response.json()['output'].strip())
         else:
-            await message.channel.send(f'x_x sorry {message.author.mention}, something went wrong.')
+            await message.reference.cached_message.send(f'x_x sorry {message.author.mention}, something went wrong.')
 
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
