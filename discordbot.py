@@ -50,12 +50,13 @@ async def on_message(message):
             # User is replying to a bot message
             reply_to = message.reference.cached_message.content
         
-        response = await send_request(message.content, reply_to=reply_to)
-        
-        if response.status_code == 200:
-            await message.reply(response.json()['output'].strip())
-        else:
-            await message.reply(f'x_x sorry {message.author.mention}, something went wrong.')
+        async with message.channel.typing():
+            response = await send_request(message.content, reply_to=reply_to)
+
+            if response.status_code == 200:
+                await message.reply(response.json()['output'].strip())
+            else:
+                await message.reply(f'x_x sorry {message.author.mention}, something went wrong.')
 
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
