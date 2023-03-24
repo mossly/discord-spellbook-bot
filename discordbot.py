@@ -23,10 +23,10 @@ async def send_request(message_content, reply_to):
         }
     }
 
-    SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
-    SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
+    SCALEAUTHTOKEN = os.getenv(SCALE_AUTH_TOKEN)
+    SCALEAUTHURL = os.getenv(SCALE_AUTH_URL)
 
-    headers = {"Authorization": "Basic SCALEAUTHTOKEN"}
+    headers = {"Authorization": "Basic "+SCALEAUTHTOKEN}
 
     response = requests.post(
         "SCALEAUTHURL",
