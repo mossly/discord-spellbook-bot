@@ -56,7 +56,7 @@ async def on_message(message):
             if response.status_code == 200:
                 await message.reply(response.json()['output'].strip())
             else:
-                await message.reply(f'x_x sorry {message.author.mention}, something went wrong.')
+                await message.reply(f'x_x sorry {message.author.mention} ~ my brain is fried ~ try again later...')
 
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
