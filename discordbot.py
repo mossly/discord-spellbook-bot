@@ -23,10 +23,13 @@ async def send_request(message_content, reply_to):
         }
     }
 
-    headers = {"Authorization": "Basic clfkgvelr03h4xf1ac0zl2cd5"}
+    SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
+    SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
+
+    headers = {"Authorization": "Basic SCALEAUTHTOKEN"}
 
     response = requests.post(
-        "https://dashboard.scale.com/spellbook/api/v2/deploy/yc63dn6",
+        "SCALEAUTHURL",
         json=data,
         headers=headers
     )
@@ -50,11 +53,11 @@ async def on_message(message):
         response = await send_request(message.content, reply_to=reply_to)
         
         if response.status_code == 200:
-            await message.channel.send(response.json()['output'].strip())
+            await message.reference.cached_message.send(response.json()['output'].strip())
         else:
-            await message.channel.send(f'Sorry {message.author.mention}, something went wrong.') 
+            await message.reference.cached_message.send(f'x_x sorry {message.author.mention}, something went wrong.')
 
-TOKEN = os.getenv("BOT_API_TOKEN")
+BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
 # Run the bot
-bot.run(TOKEN)
+bot.run(BOTAPITOKEN)
