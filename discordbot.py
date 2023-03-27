@@ -48,18 +48,33 @@ async def on_message(message):
         reply_to = None
         if message.reference and message.reference.cached_message.author == bot.user:
             # User is replying to a bot message
-            reply_to = message.reference.cached_message.content
+            reply_to = encode_caesar_cipher(message.reference.cached_message.content)
         
         async with message.channel.typing():
-            response = await send_request(message.content, reply_to=reply_to)
+            response = await send_request(encode_caesar_cipher(message.content), reply_to=reply_to)
 
             if response.status_code == 200:
                 await message.add_reaction('👀')
-                await message.reply(response.json()['output'].strip())
+                await message.reply(decode_caesar_cipher(response.json()['output'].strip()))
             else:
                 await message.add_reaction('👀')
                 await message.reply(f'x_x \n sorry {message.author.mention} ~ my brain is fried ~ try again later...')
+                
+async def encode_caesar_cipher(text, shift=3):
+    result = ""
 
+    for char in text:
+        if char.isalpha():
+            shift_amount = 65 if char.isupper() else 97
+            result += chr(((ord(char) - shift_amount + shift) % 26) + shift_amount)
+        else:
+            result += char
+
+    return result
+
+async def decode_caesar_cipher(text, shift=3):
+    return encode_caesar_cipher(text, -shift)
+                
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
 # Run the bot
