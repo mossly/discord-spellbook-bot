@@ -51,7 +51,7 @@ async def on_message(message):
         if message.content.endswith("-c"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_C")
-        else
+        else:
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
         
