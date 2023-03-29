@@ -15,7 +15,7 @@ async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
 # Event for sending Scale.AI Spellbook API requests
-async def send_request(message_content, reply_to):
+async def send_request(message_content, reply_to, SCALE_AUTH_TOKEN, SCALE_AUTH_URL):
     data = {
         "input": {
             "previous_response": str(reply_to),
@@ -23,13 +23,10 @@ async def send_request(message_content, reply_to):
         }
     }
 
-    SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
-    SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
-
-    headers = {"Authorization": "Basic "+SCALEAUTHTOKEN}
+    headers = {"Authorization": "Basic "+SCALE_AUTH_TOKEN}
 
     response = requests.post(
-        SCALEAUTHURL,
+        SCALE_AUTH_URL,
         json=data,
         headers=headers
     )
@@ -44,20 +41,26 @@ async def on_message(message):
         return
 
     if bot.user in message.mentions:
-    
+        await message.add_reaction('👀')
+        
         reply_to = None
         if message.reference and message.reference.cached_message.author == bot.user:
             # User is replying to a bot message
             reply_to = message.reference.cached_message.content
         
+        if message.content.endswith("-c"):
+            SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
+            SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_C")
+        else
+            SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
+            SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
+        
         async with message.channel.typing():
-            response = await send_request(message.content, reply_to=reply_to)
-
+            response = await send_request(message.content, reply_to, SCALEAUTHTOKEN, SCALEAUTHURL)
+            
             if response.status_code == 200:
-                await message.add_reaction('👀')
                 await message.reply(response.json()['output'].strip())
             else:
-                await message.add_reaction('👀')
                 await message.reply(f'x_x \n sorry {message.author.mention} ~ my brain is fried ~ try again later...')
 
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
