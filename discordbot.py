@@ -48,7 +48,7 @@ async def on_message(message):
         reply_to = None
         if message.reference and message.reference.cached_message.author == bot.user:
             # User is replying to a bot message
-            reply_to = message.reference.cached_message.content
+            reply_to = message.reference.cached_message.embeds[0].description
         
         if message.content.endswith("-c"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
