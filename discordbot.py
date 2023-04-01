@@ -59,7 +59,7 @@ async def on_message(message):
             response = await send_request(message.content, reply_to, SCALEAUTHTOKEN, SCALEAUTHURL)
             
             if response.status_code == 200:
-                await message.reply(embed=discord.Embed(title="", description="response.json()['output'].strip()", color=0x32A956))
+                await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32A956))
             else:
                 await message.reply(f'x_x \n sorry {message.author.mention} ~ my brain is fried ~ try again later...')
 
