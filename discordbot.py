@@ -51,15 +51,17 @@ async def on_message(message):
         if message.content.endswith("-c"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_C")
+            replyMode = "GPT4 Creative Writing"
         else:
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
+            replyMode = "GPT4 Concise"
         
         async with message.channel.typing():
             response = await send_request(message.content, reply_to, SCALEAUTHTOKEN, SCALEAUTHURL)
             
             if response.status_code == 200:
-                await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32A956))
+                await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32A956, footer=replyMode))
             else:
                 await message.reply(f'x_x \n sorry {message.author.mention} ~ my brain is fried ~ try again later...')
 
