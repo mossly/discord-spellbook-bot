@@ -6,8 +6,8 @@ import time
 
 # Create a new bot instance
 intents = discord.Intents.default()
-intents.typing = False
-intents.presences = False
+intents.typing = True
+intents.presences = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 # Event for when the bot is ready
