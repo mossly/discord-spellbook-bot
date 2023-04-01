@@ -51,15 +51,15 @@ async def on_message(message):
         if message.content.endswith("-c"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_C")
-            replyMode = "GPT-4 'Creative Writing' *Tokens: 400 Temperature: 1.1*"
+            replyMode = "GPT-4 'Creative Writing Assistant'"
         elif message.content.endswith("-t"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_T")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_T")
-            replyMode = "GPT-3.5 Turbo 'Creative Writing' *Tokens: 400 Temperature: 1.1*"           
+            replyMode = "GPT-3.5 Turbo 'Concise Assistant'"
         else:
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
-            replyMode = "GPT-4 'Concise' *Tokens: 200 Temperature: 0.6*"
+            replyMode = "GPT-4 'Concise Assistant'"
         
         async with message.channel.typing():
             response = await send_request(message.content, reply_to, SCALEAUTHTOKEN, SCALEAUTHURL)
