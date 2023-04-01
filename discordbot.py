@@ -48,17 +48,20 @@ async def on_message(message):
             # User is replying to a bot message
             reply_to = message.reference.cached_message.content
         
-        mode = message.content[-2:]
-        scaleauthtoken = os.getenv(f"scale_auth_token{mode if mode in ['-c', '-t'] else ''}")
-        scaleauthurl = os.getenv(f"scale_auth_url{mode if mode in ['-c', '-t'] else ''}")
+        if message.content.endswith("-c"):
+            SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
+            SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_C")
+        else:
+            SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
+            SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
         
         async with message.channel.typing():
             response = await send_request(message.content, reply_to, SCALEAUTHTOKEN, SCALEAUTHURL)
             
             if response.status_code == 200:
-                await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32A956, footer="Model: GPT4"))
+                await message.reply(embed=response.json()['output'].strip())
             else:
-                await message.reply(f'x_x \n sorry {message.author.mention} ~ my brain is fried ~ try again later...')
+                await message.reply(f'x_x \n sorry {message.author.mention} - please try again later...')
 
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
