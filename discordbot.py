@@ -51,12 +51,16 @@ async def on_message(message):
         reference_message = None
         if message.reference and message.reference.cached_message.author == bot.user:
             # User is replying to a bot message
-            reference_message = await message.reference.cached_message.embeds[0].description
-            reference_author = await message.reference.cached_message.author.name
+            await temp_message.delete()
+            temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching bot reference...", color=0xFDDA0D).set_footer(text=""))
+            reference_message = message.reference.cached_message.embeds[0].description
+            
         elif message.reference:
             # User is replying to a user message
-            reference_message = await message.reference.cached_message.content
-            reference_author = await message.reference.cached_message.author.name
+            await temp_message.delete()
+            temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching user reference...", color=0xFDDA0D).set_footer(text=""))
+            reference_message = message.reference.cached_message.content
+            reference_author = message.reference.cached_message.author.name
             
         if message.content.endswith("-c"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
@@ -71,7 +75,8 @@ async def on_message(message):
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
             replyMode = "GPT-4 'Concise Assistant'"
         
-        await temp_message.edit(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
+        await temp_message.delete()
+        temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
         response = await send_request(message.author.name, message.content, reference_author, reference_message, SCALEAUTHTOKEN, SCALEAUTHURL)
         await temp_message.delete()
 
