@@ -2,6 +2,7 @@ import requests
 import os
 import discord
 from discord.ext import commands
+import time
 
 # Create a new bot instance
 intents = discord.Intents.default()
