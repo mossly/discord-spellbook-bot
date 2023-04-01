@@ -51,14 +51,12 @@ async def on_message(message):
         reference_message = None
         if message.reference and message.reference.cached_message.author == bot.user:
             # User is replying to a bot message
-            await temp_message.edit(embed=discord.Embed(title="", description="...fetching message...", color=0xFDDA0D).set_footer(text=""))
-            reference_message = await message.reference.fetch_message().embeds[0].description
-            reference_author = await message.reference.fetch_message().author.name
+            reference_message = await message.reference.cached_message.embeds[0].description
+            reference_author = await message.reference.cached_message.author.name
         elif message.reference:
             # User is replying to a user message
-            await temp_message.edit(embed=discord.Embed(title="", description="...fetching message...", color=0xFDDA0D).set_footer(text=""))
-            reference_message = await message.reference.fetch_message().content
-            reference_author = await message.reference.fetch_message().author.name
+            reference_message = await message.reference.cached_message.content
+            reference_author = await message.reference.cached_message.author.name
             
         if message.content.endswith("-c"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
