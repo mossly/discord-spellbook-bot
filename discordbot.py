@@ -63,7 +63,7 @@ async def on_message(message):
             if response.status_code == 200:
                 await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32a956).set_footer(text=replymode))
             else:
-                await message.reply(f'x_x \n sorry {message.author.mention} ~ my brain is fried ~ try again later...')
+                await message.reply(f'x_x \n sorry {message.author.mention} — please try again later...')
 
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
