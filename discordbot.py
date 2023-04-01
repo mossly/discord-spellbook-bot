@@ -71,7 +71,7 @@ async def on_message(message):
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
             replyMode = "GPT-4 'Concise Assistant'"
         
-        response = await send_request(message.author.name, message.content, reference_message, SCALEAUTHTOKEN, SCALEAUTHURL)
+        response = await send_request(message.author.name, message.content, reference_author, reference_message, SCALEAUTHTOKEN, SCALEAUTHURL)
         await temp_message.delete()
             
         if response.status_code == 200:
