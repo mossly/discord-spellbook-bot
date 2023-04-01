@@ -16,10 +16,12 @@ async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
 # Event for sending Scale.AI Spellbook API requests
-async def send_request(message_content, reply_to, SCALE_AUTH_TOKEN, SCALE_AUTH_URL):
+async def send_request(message_author, message_content, reference_author, reference_message, SCALE_AUTH_TOKEN, SCALE_AUTH_URL):
     data = {
         "input": {
-            "previous_response": str(reply_to),
+            "reference_author": str(reference_author).lower(),
+            "reference_mesage": str(reference_message).lower(),
+            "message_author": str(message_author).lower(),
             "user_message": str(message_content).lower()
         }
     }
@@ -48,9 +50,13 @@ async def on_message(message):
         reply_to = None
         if message.reference and message.reference.cached_message.author == bot.user:
             # User is replying to a bot message
-            reply_to = message.reference.cached_message.embeds[0].description
+            reference_message = message.reference.fetch_message().embeds[0].description
+            reference_author = message.reference.fetch_message().author.name
         elif message.reference:
-            reply_to = message.reference.cached_message.content
+            # User is replying to a user message
+            reference_message = message.reference.fetch_message().content
+            reference_author = message.reference.fetch_message().author.name
+            
         
         if message.content.endswith("-c"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
@@ -65,14 +71,13 @@ async def on_message(message):
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
             replyMode = "GPT-4 'Concise Assistant'"
         
-        async with message.channel.typing():
-            response = await send_request(message.content, reply_to, SCALEAUTHTOKEN, SCALEAUTHURL)
-            await temp_message.delete()
+        response = await send_request(message.author.name, message.content, reference_message, SCALEAUTHTOKEN, SCALEAUTHURL)
+        await temp_message.delete()
             
-            if response.status_code == 200:
-                await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32a956).set_footer(text=f'{replyMode} | generated in {round(time.time() - start_time, 2)} seconds'))
-            else:
-                await message.reply(embed=discord.Embed(title="ERROR", description="x_x", color=0xDC143C).set_footer(text="message failed to send..."))
+        if response.status_code == 200:
+            await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32a956).set_footer(text=f'{replyMode} | generated in {round(time.time() - start_time, 2)} seconds'))
+        else:
+            await message.reply(embed=discord.Embed(title="ERROR", description="x_x", color=0xDC143C).set_footer(text="message failed to send..."))
 
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
