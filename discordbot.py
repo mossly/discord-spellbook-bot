@@ -45,16 +45,18 @@ async def on_message(message):
 
     if bot.user in message.mentions:
         start_time = time.time()
-        temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
+        temp_message = await message.reply(embed=discord.Embed(title="", description="...reading request...", color=0xFDDA0D).set_footer(text=""))
         
         reference_author = None
         reference_message = None
         if message.reference and message.reference.cached_message.author == bot.user:
             # User is replying to a bot message
+            await temp_message.edit(embed=discord.Embed(title="", description="...fetching message...", color=0xFDDA0D).set_footer(text=""))
             reference_message = message.reference.fetch_message().embeds[0].description
             reference_author = message.reference.fetch_message().author.name
         elif message.reference:
             # User is replying to a user message
+            await temp_message.edit(embed=discord.Embed(title="", description="...fetching message...", color=0xFDDA0D).set_footer(text=""))
             reference_message = message.reference.fetch_message().content
             reference_author = message.reference.fetch_message().author.name
             
@@ -71,9 +73,10 @@ async def on_message(message):
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
             replyMode = "GPT-4 'Concise Assistant'"
         
+        await temp_message.edit(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
         response = await send_request(message.author.name, message.content, reference_author, reference_message, SCALEAUTHTOKEN, SCALEAUTHURL)
         await temp_message.delete()
-            
+
         if response.status_code == 200:
             await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32a956).set_footer(text=f'{replyMode} | generated in {round(time.time() - start_time, 2)} seconds'))
         else:
