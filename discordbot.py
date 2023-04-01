@@ -41,7 +41,8 @@ async def on_message(message):
         return
 
     if bot.user in message.mentions:
-        await message.add_reaction('👀')
+        start_time = time.time()
+        temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
         
         reply_to = None
         if message.reference and message.reference.cached_message.author == bot.user:
@@ -63,11 +64,12 @@ async def on_message(message):
         
         async with message.channel.typing():
             response = await send_request(message.content, reply_to, SCALEAUTHTOKEN, SCALEAUTHURL)
+            await temp_message.delete()
             
             if response.status_code == 200:
-                await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32a956).set_footer(text=replyMode))
+                await message.reply(embed=discord.Embed(title="", description=response.json()['output'].strip(), color=0x32a956).set_footer(text=replyMode).set_footer(text=f'generated in {round(time.time() - start_time, 2)} seconds')
             else:
-                await message.reply(f'x_x \n sorry {message.author.mention} — please try again later...')
+                await message.reply(embed=discord.Embed(title="ERROR", description="x_x", color=0xDC143C).set_footer(text="message failed to send..."))
 
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
