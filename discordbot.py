@@ -52,7 +52,7 @@ async def on_message(message):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_C")
             replyMode = "GPT-4 'Creative Writing' *Tokens: 400 Temperature: 1.1*"
-        else if message.content.endswith("-t"):
+        elif message.content.endswith("-t"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_T")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_T")
             replyMode = "GPT-3.5 Turbo 'Creative Writing' *Tokens: 400 Temperature: 1.1*"           
