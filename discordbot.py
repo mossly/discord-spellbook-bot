@@ -47,7 +47,8 @@ async def on_message(message):
         start_time = time.time()
         temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
         
-        reply_to = None
+        reference_author = None
+        reference_message = None
         if message.reference and message.reference.cached_message.author == bot.user:
             # User is replying to a bot message
             reference_message = message.reference.fetch_message().embeds[0].description
@@ -57,7 +58,6 @@ async def on_message(message):
             reference_message = message.reference.fetch_message().content
             reference_author = message.reference.fetch_message().author.name
             
-        
         if message.content.endswith("-c"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_C")
