@@ -1,21 +1,18 @@
 import requests
 import os
+import time
 import discord
 from discord.ext import commands
-import time
 
-# Create a new bot instance
 intents = discord.Intents.default()
 intents.typing = True
 intents.presences = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# Event for when the bot is ready
 @bot.event
 async def on_ready():
     print(f"{bot.user.name} has connected to Discord!")
 
-# Event for sending Scale.AI Spellbook API requests
 async def send_request(message_author, message_content, reference_author, reference_message, SCALE_AUTH_TOKEN, SCALE_AUTH_URL):
     data = {
         "input": {
@@ -36,10 +33,8 @@ async def send_request(message_author, message_content, reference_author, refere
 
     return response
 
-# Event for handling messages
 @bot.event
 async def on_message(message):
-    # Check if the message was sent by the bot itself
     if message.author == bot.user:
         return
 
@@ -50,14 +45,12 @@ async def on_message(message):
         reference_author = None
         reference_message = None
         if message.reference and message.reference.cached_message.author == bot.user:
-            # User is replying to a bot message
             await temp_message.delete()
             temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching bot reference...", color=0xFDDA0D).set_footer(text=""))
             reference_message = message.reference.cached_message.embeds[0].description
             reference_author = "MS-DOS-LY"
             
         elif message.reference:
-            # User is replying to a user message
             await temp_message.delete()
             temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching user reference...", color=0xFDDA0D).set_footer(text=""))
             reference_message = message.reference.cached_message.content
@@ -66,15 +59,15 @@ async def on_message(message):
         if message.content.endswith("-c"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_C")
-            replyMode = "GPT-4 'Creative Writing Assistant'"
+            replyMode = "GPT-4 'Creative'"
         elif message.content.endswith("-t"):
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_T")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_T")
-            replyMode = "GPT-3.5 Turbo 'Concise Assistant'"
+            replyMode = "GPT-3.5 Turbo 'Concise'"
         else:
             SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
             SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
-            replyMode = "GPT-4 'Concise Assistant'"
+            replyMode = "GPT-4 'Concise'"
         
         await temp_message.delete()
         temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
@@ -88,5 +81,4 @@ async def on_message(message):
 
 BOTAPITOKEN  = os.getenv("BOT_API_TOKEN")
 
-# Run the bot
 bot.run(BOTAPITOKEN)
