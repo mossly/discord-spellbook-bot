@@ -21,8 +21,8 @@ async def send_request(message_author, message_content, reference_author, refere
         "input": {
             "message_author": str(message_author).lower(),
             "reference_author": str(reference_author).lower(),
-            "reference_mesage": str(reference_message).lower(),
-            "message_content": str(message_content).lower()
+            "reference_mesage": str(reference_message).lower().replace("<@1088294375253082223>", ""),
+            "message_content": str(message_content).lower().replace("<@1088294375253082223>", "")
         }
     }
 
@@ -54,6 +54,7 @@ async def on_message(message):
             await temp_message.delete()
             temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching bot reference...", color=0xFDDA0D).set_footer(text=""))
             reference_message = message.reference.cached_message.embeds[0].description
+            reference_author = "MS-DOS-LY"
             
         elif message.reference:
             # User is replying to a user message
