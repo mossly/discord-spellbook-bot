@@ -56,18 +56,16 @@ async def on_message(message):
             reference_message = message.reference.cached_message.content
             reference_author = message.reference.cached_message.author.name
             
-        if message.content.endswith("-c"):
-            SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_C")
-            SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_C")
-            replyMode = "GPT-4 'Creative'"
-        elif message.content.endswith("-t"):
-            SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN_MODE_T")
-            SCALEAUTHURL = os.getenv("SCALE_AUTH_URL_MODE_T")
-            replyMode = "GPT-3.5 Turbo 'Concise'"
-        else:
-            SCALEAUTHTOKEN = os.getenv("SCALE_AUTH_TOKEN")
-            SCALEAUTHURL = os.getenv("SCALE_AUTH_URL")
-            replyMode = "GPT-4 'Concise'"
+        suffixes = {
+            "-v": ("scale_auth_token_mode_v", "scale_auth_url_mode_v", "gpt-4 'verbose'")
+            "-t": ("scale_auth_token_mode_t", "scale_auth_url_mode_t", "gpt-3.5 turbo 'concise'")
+            "-c": ("scale_auth_token_mode_c", "scale_auth_url_mode_c", "gpt-4 'creative'"),
+        }
+
+        scaleauthtoken, scaleauthurl, replymode = suffixes.get(message.content[-2:], ("scale_auth_token", "scale_auth_url", "gpt-4 'concise'"))
+
+        scaleauthtoken = os.getenv(scaleauthtoken)
+        scaleauthurl = os.getenv(scaleauthurl)
         
         await temp_message.delete()
         temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
