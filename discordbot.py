@@ -62,7 +62,7 @@ async def on_message(message):
             "-c": ("SCALE_AUTH_TOKEN_MODE_C", "SCALE_AUTH_URL_MODE_C", "gpt-4 'creative'")
         }
 
-        SCALE_AUTH_TOKEN, SCALE_AUTH_URL, replymode = suffixes.get(message.content[-2:], ("SCALE_AUTH_TOKEN", "SCALE_AUTH_URL", "gpt-4 'concise'"))
+        SCALE_AUTH_TOKEN, SCALE_AUTH_URL, replyMode = suffixes.get(message.content[-2:], ("SCALE_AUTH_TOKEN", "SCALE_AUTH_URL", "gpt-4 'concise'"))
 
         SCALEAUTHTOKEN = os.getenv(SCALE_AUTH_TOKEN)
         SCALEAUTHURL = os.getenv(SCALE_AUTH_URL)
