@@ -62,10 +62,10 @@ async def on_message(message):
             "-c": ("scale_auth_token_mode_c", "scale_auth_url_mode_c", "gpt-4 'creative'")
         }
 
-        scaleauthtoken, scaleauthurl, replymode = suffixes.get(message.content[-2:], ("scale_auth_token", "scale_auth_url", "gpt-4 'concise'"))
+        SCALEAUTHTOKEN, SCALEAUTHURL, replymode = suffixes.get(message.content[-2:], ("scale_auth_token", "scale_auth_url", "gpt-4 'concise'"))
 
-        scaleauthtoken = os.getenv(scaleauthtoken)
-        scaleauthurl = os.getenv(scaleauthurl)
+        SCALEAUTHTOKEN = os.getenv(SCALEAUTHTOKEN)
+        SCALEAUTHURL = os.getenv(SCALEAUTHURL)
         
         await temp_message.delete()
         temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
