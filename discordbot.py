@@ -58,7 +58,7 @@ async def on_message(message):
             
         suffixes = {
             "-v": ("SCALE_AUTH_TOKEN_MODE_V", "SCALE_AUTH_URL_MODE_V", "GPT-4 'Verbose'"),
-            "-t": ("SCALE_AUTH_TOKEN_MODE_T", "SCALE_AUTH_URL_MODE_T", "GPT-3.5 turbo 'Concise'"),
+            "-t": ("SCALE_AUTH_TOKEN_MODE_T", "SCALE_AUTH_URL_MODE_T", "GPT-3.5 Turbo 'Concise'"),
             "-c": ("SCALE_AUTH_TOKEN_MODE_C", "SCALE_AUTH_URL_MODE_C", "GPT-4 'Creative'")
         }
 
