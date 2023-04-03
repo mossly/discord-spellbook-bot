@@ -57,17 +57,15 @@ async def on_message(message):
             reference_author = message.reference.cached_message.author.name
             
         suffixes = {
-            "-v": ("SCALE_AUTH_TOKEN_MODE_V", "SCALE_AUTH_URL_MODE_V", "gpt-4 'verbose'"),
-            "-t": ("SCALE_AUTH_TOKEN_MODE_T", "SCALE_AUTH_URL_MODE_T", "gpt-3.5 turbo 'concise'"),
-            "-c": ("SCALE_AUTH_TOKEN_MODE_C", "SCALE_AUTH_URL_MODE_C", "gpt-4 'creative'")
+            "-v": ("SCALE_AUTH_TOKEN_MODE_V", "SCALE_AUTH_URL_MODE_V", "GPT-4 'Verbose'"),
+            "-t": ("SCALE_AUTH_TOKEN_MODE_T", "SCALE_AUTH_URL_MODE_T", "GPT-3.5 turbo 'Concise'"),
+            "-c": ("SCALE_AUTH_TOKEN_MODE_C", "SCALE_AUTH_URL_MODE_C", "GPT-4 'Creative'")
         }
 
-        SCALE_AUTH_TOKEN, SCALE_AUTH_URL, replyMode = suffixes.get(message.content[-2:], ("SCALE_AUTH_TOKEN", "SCALE_AUTH_URL", "gpt-4 'concise'"))
+        SCALE_AUTH_TOKEN, SCALE_AUTH_URL, replyMode = suffixes.get(message.content[-2:], ("SCALE_AUTH_TOKEN", "SCALE_AUTH_URL", "GPT-4 'Concise'"))
 
         SCALEAUTHTOKEN = os.getenv(SCALE_AUTH_TOKEN)
         SCALEAUTHURL = os.getenv(SCALE_AUTH_URL)
-        
-        print(SCALEAUTHTOKEN)
         
         await temp_message.delete()
         temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
