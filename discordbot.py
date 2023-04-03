@@ -57,12 +57,12 @@ async def on_message(message):
             reference_author = message.reference.cached_message.author.name
             
         suffixes = {
-            "-v": ("scale_auth_token_mode_v", "scale_auth_url_mode_v", "gpt-4 'verbose'"),
-            "-t": ("scale_auth_token_mode_t", "scale_auth_url_mode_t", "gpt-3.5 turbo 'concise'"),
-            "-c": ("scale_auth_token_mode_c", "scale_auth_url_mode_c", "gpt-4 'creative'")
+            "-v": ("SCALE_AUTH_TOKEN_MODE_V", "SCALE_AUTH_URL_MODE_V", "gpt-4 'verbose'"),
+            "-t": ("SCALE_AUTH_TOKEN_MODE_T", "SCALE_AUTH_URL_MODE_T", "gpt-3.5 turbo 'concise'"),
+            "-c": ("SCALE_AUTH_TOKEN_MODE_C", "SCALE_AUTH_URL_MODE_C", "gpt-4 'creative'")
         }
 
-        SCALE_AUTH_TOKEN, SCALE_AUTH_URL, replymode = suffixes.get(message.content[-2:], ("scale_auth_token", "scale_auth_url", "gpt-4 'concise'"))
+        SCALE_AUTH_TOKEN, SCALE_AUTH_URL, replymode = suffixes.get(message.content[-2:], ("SCALE_AUTH_TOKEN", "SCALE_AUTH_URL", "gpt-4 'concise'"))
 
         SCALEAUTHTOKEN = os.getenv(SCALE_AUTH_TOKEN)
         SCALEAUTHURL = os.getenv(SCALE_AUTH_URL)
