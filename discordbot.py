@@ -67,6 +67,8 @@ async def on_message(message):
         SCALEAUTHTOKEN = os.getenv(SCALE_AUTH_TOKEN)
         SCALEAUTHURL = os.getenv(SCALE_AUTH_URL)
         
+        print(SCALEAUTHTOKEN)
+        
         await temp_message.delete()
         temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
         response = await send_request(message.author.name, message.content, reference_author, reference_message, SCALEAUTHTOKEN, SCALEAUTHURL)
