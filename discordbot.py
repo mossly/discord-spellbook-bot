@@ -16,10 +16,10 @@ async def on_ready():
 async def send_request(message_author, message_content, reference_author, reference_message, SCALE_AUTH_TOKEN, SCALE_AUTH_URL):
     data = {
         "input": {
-            "message_author": str(message_author).lower(),
-            "reference_author": str(reference_author).lower(),
-            "reference_mesage": str(reference_message).lower().replace("<@1088294375253082223>", ""),
-            "message_content": str(message_content).lower().replace("<@1088294375253082223>", "")
+            "message_author": str(message_author),
+            "reference_author": str(reference_author),
+            "reference_mesage": str(reference_message).replace("<@1088294375253082223>", ""),
+            "message_content": str(message_content).replace("<@1088294375253082223>", "")
         }
     }
 
