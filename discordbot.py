@@ -72,7 +72,7 @@ async def on_message(message):
         
         await temp_message.delete()
         temp_message = await message.reply(embed=discord.Embed(title="", description="...generating reply...", color=0xFDDA0D).set_footer(text=""))
-        response = await send_request(message.author.name, message.content, reference_author, reference_message, SCALEAUTHTOKEN, SCALEAUTHURL)
+        response = await send_request(message.author.name, message.content.strip(), reference_author, reference_message, SCALEAUTHTOKEN, SCALEAUTHURL)
         await temp_message.delete()
 
         if response.status_code == 200:
