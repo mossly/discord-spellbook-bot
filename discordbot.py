@@ -44,17 +44,17 @@ async def on_message(message):
         
         reference_author = None
         reference_message = None
-        if message.reference and message.reference.cached_message.author == bot.user:
-            await temp_message.delete()
-            temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching bot reference...", color=0xFDDA0D).set_footer(text=""))
-            reference_message = message.reference.cached_message.embeds[0].description
-            reference_author = "MS-DOS-LY"
-            
-        elif message.reference:
-            await temp_message.delete()
-            temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching user reference...", color=0xFDDA0D).set_footer(text=""))
-            reference_message = message.reference.cached_message.content
-            reference_author = message.reference.cached_message.author.name
+        if message.reference
+            if message.reference.cached_message.author == bot.user:
+                await temp_message.delete()
+                temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching bot reference...", color=0xFDDA0D).set_footer(text=""))
+                reference_message = message.reference.cached_message.embeds[0].description
+                reference_author = "MS-DOS-LY"
+            else:
+                await temp_message.delete()
+                temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching user reference...", color=0xFDDA0D).set_footer(text=""))
+                reference_message = message.reference.cached_message.content
+                reference_author = message.reference.cached_message.author.name
             
         suffixes = {
             "-v": ("SCALE_AUTH_TOKEN_MODE_V", "SCALE_AUTH_URL_MODE_V", "GPT-4 'Verbose'"),
