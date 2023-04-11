@@ -44,7 +44,7 @@ async def on_message(message):
         
         reference_author = None
         reference_message = None
-        if message.reference
+        if message.reference:
             if message.reference.cached_message.author == bot.user:
                 await temp_message.delete()
                 temp_message = await message.reply(embed=discord.Embed(title="", description="...fetching bot reference...", color=0xFDDA0D).set_footer(text=""))
